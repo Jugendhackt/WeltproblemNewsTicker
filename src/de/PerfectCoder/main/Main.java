@@ -23,6 +23,7 @@ import javax.swing.border.EmptyBorder;
 
 public class Main{
 	
+	public static String s;
 	private JFrame frame;
 
 	  public static void main(String[] args) {
@@ -34,7 +35,7 @@ public class Main{
 			URLConnection connection = url.openConnection();
 			
 			is = connection.getInputStream();
-			System.out.println(new Scanner(is).useDelimiter( "\\Z" ).next());
+			s = (new Scanner(is).useDelimiter( "\\Z" ).next());
 			is.close();
 			
 		} catch (Exception ex) {
