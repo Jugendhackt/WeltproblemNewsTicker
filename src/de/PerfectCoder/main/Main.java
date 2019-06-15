@@ -6,9 +6,10 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.InputStream;
 import java.net.URL;
+import java.net.URLConnection;
+import java.util.Scanner;
 
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
@@ -21,12 +22,26 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 public class Main{
-
-	public boolean active;
 	
 	private JFrame frame;
 
-	public static void main(String[] args) {
+	  public static void main(String[] args) {
+		try {
+			
+			InputStream is = null;
+				
+			URL url = new URL("https://www.spiegel.de/schlagzeilen/index.rss");
+			URLConnection connection = url.openConnection();
+			
+			is = connection.getInputStream();
+			System.out.println(new Scanner(is).useDelimiter( "\\Z" ).next());
+			is.close();
+			
+		} catch (Exception ex) {
+			System.out.println(ex.toString());
+			
+			}
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -37,8 +52,8 @@ public class Main{
 				}
 			}
 		});
-	}
 
+	}
 	public Main() {
 		initialize();
 	}
@@ -277,31 +292,9 @@ public class Main{
 		mntmNewMenuItem_6.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				editorPane.setText(readRSS(""));
 				
 			}
 
-			public static String readRSS(String urlAdress) { 
-				URL rssURL = new URL("");
-				BufferedReader in = new BufferedReader(new InputStreamReader(rssURL.openStream()));
-				String sourcecode = "";
-				String line;
-				while((line = in.readLine()) != null) {
-				   if(line.contains("<title>")) {
-					   int firstPos = line.indexOf("<title>");
-					   String temp = line.substring(firstPos);
-					   temp = temp.replace("<title>", " ");
-					   int lastPos = temp.indexOf("<title>");
-					   temp = temp.substring(0, lastPos);
-					   sourcecode += temp+"\n";
-					   
-				   }
-					
-			
-		}
-				
-				return null;
-			}
 		});
 		mntmNewMenuItem_6.setForeground(Color.WHITE);
 		mntmNewMenuItem_6.setBackground(Color.DARK_GRAY);
