@@ -5,11 +5,6 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.Scanner;
-
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
@@ -25,8 +20,19 @@ public class Frame2 {
 	private static JFrame frame;
 	public static String s;
 	
-	@SuppressWarnings("resource")
+	/**
+	 * @wbp.parser.entryPoint
+	 */
 	public static void main2(String[] args) {
+		frame = new JFrame();
+		frame.getContentPane().setBackground(UIManager.getColor("window2"));
+		frame.setBounds(100, 100, 758, 655);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		frame.setTitle("Weltproblem-NewsTicker");
+		frame.setVisible(true);
+		frame.setEnabled(true);
+		
 			try {
 				s = XMLParser.takeURLContent("https://www.spiegel.de/schlagzeilen/index.rss")	;		
 				String preparedString = XMLParser.prepareParse(s);
@@ -38,11 +44,6 @@ public class Frame2 {
 				
 				}
 		
-		frame = new JFrame();
-		frame.getContentPane().setBackground(UIManager.getColor("window2"));
-		frame.setBounds(100, 100, 758, 655);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
 		
 		JTextPane txtpnAktuelleWeltProbleme = new JTextPane();
 		txtpnAktuelleWeltProbleme.setFont(new Font("Geeza Pro", Font.BOLD, 15));
@@ -268,13 +269,6 @@ public class Frame2 {
 		frame.getContentPane().add(editorPane);
 		
 		JMenuItem mntmNewMenuItem_6 = new JMenuItem("- Kinderamut");
-		mntmNewMenuItem_6.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-			}
-
-		});
 		mntmNewMenuItem_6.setForeground(Color.WHITE);
 		mntmNewMenuItem_6.setBackground(Color.DARK_GRAY);
 		popupMenu.add(mntmNewMenuItem_6);
