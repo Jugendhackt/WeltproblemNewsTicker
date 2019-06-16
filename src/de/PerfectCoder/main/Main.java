@@ -2,23 +2,28 @@ package de.PerfectCoder.main;
 
 import java.awt.EventQueue;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import org.w3c.dom.Document;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JCheckBox;
+import javax.swing.JButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Main{
 	
-	public static boolean umwelt;
-	public static boolean aktuelle;
-	public static boolean vergangen;
+	public static boolean umwelt = false;
+	public static boolean aktuelle = false;
+	public static boolean vergangen = false;
+	private static int a = 0;
 	public static String s;
 	private JFrame firstframe;
 
 	  public static void main(String[] args) {
-		  Frame2.main2(args);
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -34,7 +39,6 @@ public class Main{
 			try {
 				s = XMLParser.takeURLContent("https://www.spiegel.de/schlagzeilen/index.rss")	;		
 				String preparedString = XMLParser.prepareParse(s);
-				@SuppressWarnings("unused")
 				Document doc = XMLParser.xmlparse(preparedString);
 				
 				
@@ -44,13 +48,14 @@ public class Main{
 				}
 
 	}
+	  
 	public Main() {
 		initialize();
 	}
 
 	private void initialize() {
 		firstframe = new JFrame();
-		firstframe.setBounds(100, 100, 758, 655);
+		firstframe.setBounds(100, 100, 729, 367);
 		firstframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		firstframe.setTitle("Treffe deine Auswahl!");
 		firstframe.setVisible(true);
@@ -79,18 +84,57 @@ public class Main{
 		
 		JCheckBox chckbxUmwelt = new JCheckBox("Umwelt");
 		chckbxUmwelt.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		chckbxUmwelt.setBounds(41, 170, 128, 23);
+		chckbxUmwelt.setBounds(29, 170, 128, 23);
 		panel.add(chckbxUmwelt);
 		
-		JCheckBox chckbxAkutelleProbleme = new JCheckBox("Akutelle Probleme");
-		chckbxAkutelleProbleme.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		chckbxAkutelleProbleme.setBounds(234, 170, 208, 23);
-		panel.add(chckbxAkutelleProbleme);
+		JCheckBox chckbxAktuelleProbleme = new JCheckBox("Aktuelle Probleme");
+		chckbxAktuelleProbleme.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+		chckbxAktuelleProbleme.setBounds(240, 170, 208, 23);
+		panel.add(chckbxAktuelleProbleme);
 		
 		JCheckBox chckbxVergangenheit = new JCheckBox("Vergangenheit");
 		chckbxVergangenheit.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		chckbxVergangenheit.setBounds(529, 170, 177, 23);
+		chckbxVergangenheit.setBounds(526, 170, 177, 23);
 		panel.add(chckbxVergangenheit);
+		
+		JButton btnFertig = new JButton("Fertig");
+		btnFertig.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(chckbxUmwelt.isSelected()) {
+					umwelt = true;
+					a += 1;
+					
+				}
+				
+				if(chckbxAktuelleProbleme.isSelected()) {
+					aktuelle = true;
+					a += 1;
+					
+				}
+				
+				if(chckbxVergangenheit.isSelected()) {
+					vergangen = true;
+					a += 1;
+					
+				}
+				
+				if(a > 0) {
+					Frame2.main2();
+					firstframe.setEnabled(false);
+					firstframe.setVisible(false);
+					
+				} else {
+					JOptionPane.showMessageDialog(null, "Bitte wähle mindestens 1 Thema aus!");
+					
+				}
+				
+			}
+		});
+		btnFertig.setBounds(287, 293, 117, 29);
+		panel.add(btnFertig);
+		
+		
 		
 		// FirstFrame
 		
