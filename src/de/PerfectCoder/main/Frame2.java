@@ -5,11 +5,6 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.Scanner;
-
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
@@ -25,8 +20,19 @@ public class Frame2 {
 	private static JFrame frame;
 	public static String s;
 	
-	@SuppressWarnings("resource")
-	public static void main2(String[] args) {
+	/**
+	 * @wbp.parser.entryPoint
+	 */
+	public static void main2() {
+		frame = new JFrame();
+		frame.getContentPane().setBackground(UIManager.getColor("window2"));
+		frame.setBounds(100, 100, 758, 655);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		frame.setTitle("Weltproblem-NewsTicker");
+		frame.setVisible(true);
+		frame.setEnabled(true);
+		
 			try {
 				s = XMLParser.takeURLContent("https://www.spiegel.de/schlagzeilen/index.rss")	;		
 				String preparedString = XMLParser.prepareParse(s);
@@ -38,11 +44,6 @@ public class Frame2 {
 				
 				}
 		
-		frame = new JFrame();
-		frame.getContentPane().setBackground(UIManager.getColor("window2"));
-		frame.setBounds(100, 100, 758, 655);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
 		
 		JTextPane txtpnAktuelleWeltProbleme = new JTextPane();
 		txtpnAktuelleWeltProbleme.setFont(new Font("Geeza Pro", Font.BOLD, 15));
@@ -77,121 +78,57 @@ public class Frame2 {
 		addPopup(panel, popupMenu);
 		popupMenu.setLocation(24, 156);
 		
-		JMenuItem mntmNewMenuItem_1 = new JMenuItem("UMWELT");
-		mntmNewMenuItem_1.setFont(new Font("Impact", Font.PLAIN, 15));
-		mntmNewMenuItem_1.setForeground(Color.WHITE);
-		mntmNewMenuItem_1.setBackground(Color.DARK_GRAY);
-		popupMenu.add(mntmNewMenuItem_1);
+		// --- UMWELT --- 
 		
-		JMenuItem mntmNewMenuItem = new JMenuItem("- Aktuelle Beiträge");
-		mntmNewMenuItem.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
-		mntmNewMenuItem.setForeground(Color.WHITE);
-		mntmNewMenuItem.setBackground(Color.DARK_GRAY);
-		popupMenu.add(mntmNewMenuItem);
 		
-		JMenuItem mntmNewMenuItem_2 = new JMenuItem("- Klimawandel");
-		mntmNewMenuItem_2.setForeground(Color.WHITE);
-		mntmNewMenuItem_2.setBackground(Color.DARK_GRAY);
-		popupMenu.add(mntmNewMenuItem_2);
+		if(Main.umwelt == true) {
+			JMenuItem mntmNewMenuItem_1 = new JMenuItem("UMWELT");
+			mntmNewMenuItem_1.setFont(new Font("Impact", Font.PLAIN, 15));
+			mntmNewMenuItem_1.setForeground(Color.WHITE);
+			mntmNewMenuItem_1.setBackground(Color.DARK_GRAY);
+			
+			JMenuItem mntmNewMenuItem = new JMenuItem("- Aktuelle Beiträge");
+			mntmNewMenuItem.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
+			mntmNewMenuItem.setForeground(Color.WHITE);
+			mntmNewMenuItem.setBackground(Color.DARK_GRAY);
+			
+			JMenuItem mntmNewMenuItem_2 = new JMenuItem("- Klimawandel");
+			mntmNewMenuItem_2.setForeground(Color.WHITE);
+			mntmNewMenuItem_2.setBackground(Color.DARK_GRAY);
+			
+			JMenuItem mntmNewMenuItem_3 = new JMenuItem("- Zeit bis Katastrophe");
+			mntmNewMenuItem_3.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					
+					JEditorPane editorPane = new JEditorPane();
+					editorPane.setBounds(338, 101, 420, 532);
+					editorPane.setContentType("text/html");
+					
+					editorPane.setText(s);
+					
+					frame.getContentPane().add(editorPane);
+					
+				}
+			});
+			mntmNewMenuItem_3.setBackground(Color.DARK_GRAY);
+			mntmNewMenuItem_3.setForeground(Color.WHITE);
+			
+			JMenuItem mntmNewMenuItem_4 = new JMenuItem("- Tipps");
+			mntmNewMenuItem_4.setForeground(Color.WHITE);
+			mntmNewMenuItem_4.setBackground(Color.DARK_GRAY);
+			
+			
+			popupMenu.add(mntmNewMenuItem_1);
+			popupMenu.add(mntmNewMenuItem);
+			popupMenu.add(mntmNewMenuItem_2);
+			popupMenu.add(mntmNewMenuItem_3);
+			popupMenu.add(mntmNewMenuItem_4);
+			
+		}
 		
-		JMenuItem mntmNewMenuItem_3 = new JMenuItem("- Zeit bis Katastrophe");
-		mntmNewMenuItem_3.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-				JEditorPane editorPane = new JEditorPane();
-				editorPane.setBounds(338, 101, 420, 532);
-				editorPane.setContentType("text/html");
-				
-				String html = "\n" + 
-						"<!DOCTYPE html>\n" + 
-						"<html class=\"no-js\" lang=\"en-US\">\n" + 
-						"    <head>\n" + 
-						"        <meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">\n" + 
-						"        <meta charset=\"UTF-8\">\n" + 
-						"        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" + 
-						"        <title>The Countdown 2º Clock</title>\n" + 
-						"        <link rel=\"stylesheet\" type=\"text/css\" href=\"carbon_clock.css\">\n" + 
-						"        <script type=\"text/javascript\" src=\"carbon_clock-Dateien/jquery_002.js\"></script>\n" + 
-						"        <script type=\"text/javascript\" src=\"carbon_clock-Dateien/CO2Calculator.js?i=374267543\"></script>\n" + 
-						"    </head>\n" + 
-						"    <body>\n" + 
-						"        <video id=\"video_background\" preload=\"auto\" autoplay loop muted volume=\"0\"> \n" + 
-						"            <source src=\"carbon_clock-Dateien/MCC_CO2_ani_2_bb_small_lq.mp4\" type=\"video/mp4\"> \n" + 
-						"        </video>\n" + 
-						"        <div id=\"main\">\n" + 
-						"            <div id=\"wrapper\" align=\"center\">\n" + 
-						"                <div id=\"footer\">Minx, Creutzig, Edenhofer: \"Climate goals require fast learning in negative emission technologies\" (in press)</div>\n" + 
-						"                <div id=\"buttons\">\n" + 
-						"                    <ul id=\"deg\">\n" + 
-						"                        <li><a id=\"2\" href=\"javascript:void(0)\" class=\"active\">2°C scenario</a></li>\n" + 
-						"                        <li id=\"onedeg\"><a id=\"1.5\" href=\"javascript:void(0)\">1.5°C scenario</a></li>\n" + 
-						"                    </ul>\n" + 
-						"                    <ul id=\"range\" style=\"display: none\">\n" + 
-						"                        <li><a id=\"max\" href=\"javascript:void(0)\">upper estimate</a></li>\n" + 
-						"                        <li><a id=\"med\" href=\"javascript:void(0)\" class=\"active\">medium estimate</a></li>\n" + 
-						"                        <li><a id=\"min\" href=\"javascript:void(0)\">lower estimate</a></li>\n" + 
-						"                    </ul>\n" + 
-						"                    <ul id=\"growth\">\n" + 
-						"                        <li id=\"growth1\"><a id=\"zero\" href=\"javascript:void(0)\" class=\"active\">no growth</a></li>\n" + 
-						"                        <li id=\"growth2\"><a id=\"current\" href=\"javascript:void(0)\" class=\"\">current growth</a></li>\n" + 
-						"                        <li><a target=\"_blank\" href=\"https://www.mcc-berlin.net/en/research/co2-budget.html \" style=\"border: 0; background: black;\"><img style=\"width: 100%;\" src=\"/fileadmin/data/img/mcc_logo_rz_1c_negativ.png \" \n" + 
-						"onmouseover=\"this.src='/fileadmin/data/img/mcc_logo_rz_1c_negativ_blue.png'\"\n" + 
-						"onmouseout=\"this.src='/fileadmin/data/img/mcc_logo_rz_1c_negativ.png'\" /></a></li>\n" + 
-						"\n" + 
-						"                    </ul>\n" + 
-						"                </div>  \n" + 
-						"                <h1 id=\"global-temp\">CO<sub>2</sub> emissions [tons/sec]</h1>\n" + 
-						"                <div id=\"global-temp-container\"><span id=\"currentrate\" class=\"bold grad\">1.293</span></div>\n" + 
-						"                <h1 id=\"time-to-two\">time left until CO<sub>2</sub> budget depleted</h1>\n" + 
-						"                <div id=\"timecountdown\">\n" + 
-						"                    <table cellpadding=0 cellspacing=0>\n" + 
-						"                        <tr>\n" + 
-						"                            <th style=\"padding-left: 0;\">year</th>\n" + 
-						"                            <th>month</th>\n" + 
-						"                            <th>day</th>\n" + 
-						"                            <th>hour</th>\n" + 
-						"                            <th>min</th>\n" + 
-						"                            <th>sec</th>\n" + 
-						"                            <th>&nbsp;</th>\n" + 
-						"                        </tr><tr>\n" + 
-						"                            <td id=\"years\"></td>\n" + 
-						"                            <td id=\"months\"></td>\n" + 
-						"                            <td id=\"days\"></td>\n" + 
-						"                            <td id=\"hours\"></td>\n" + 
-						"                            <td id=\"minutes\"></td>\n" + 
-						"                            <td id=\"seconds\"></td>\n" + 
-						"                            <td id=\"milliseconds\"></td>\n" + 
-						"                        </tr>\n" + 
-						"                    </table>\n" + 
-						"                </div>\n" + 
-						"                <!--<h5 id=\"timecountdown-labels\"><span>y&nbsp;&nbsp;</span><span>m&nbsp;&nbsp;</span><span>d&nbsp;&nbsp;</span><span>h&nbsp;&nbsp;</span><span>m&nbsp;&nbsp;</span><span>s&nbsp;&nbsp;</span><span>cs</span></h5>-->\n" + 
-						"                <h1 id=\"tonnes\">CO<sub>2</sub> budget left [tons]</h1>\n" + 
-						"                <div id=\"carbontonnes\">error</div>\n" + 
-						"            </div>\n" + 
-						"        </div>\n" + 
-						"        <script>\n" + 
-						"            switchScenarios();\n" + 
-						"            $('#med').click();\n" + 
-						"            $('#zero').click();\n" + 
-						"        </script>\n" + 
-						"    </body>\n" + 
-						"</html>";
-				
-				editorPane.setText(html);
-				
-				frame.getContentPane().add(editorPane);
-				
-			}
-		});
-		mntmNewMenuItem_3.setBackground(Color.DARK_GRAY);
-		mntmNewMenuItem_3.setForeground(Color.WHITE);
-		popupMenu.add(mntmNewMenuItem_3);
-		
-		JMenuItem mntmNewMenuItem_4 = new JMenuItem("- Tipps");
-		mntmNewMenuItem_4.setForeground(Color.WHITE);
-		mntmNewMenuItem_4.setBackground(Color.DARK_GRAY);
-		popupMenu.add(mntmNewMenuItem_4);
+		// --- AKTUELLE PROBLEME
+		if(Main.aktuelle == true) {
 		
 		JMenuItem mntmNewMenuItem_5 = new JMenuItem("AKTUELLE PROBLEME");
 		mntmNewMenuItem_5.setFont(new Font("Impact", Font.PLAIN, 15));
@@ -229,6 +166,12 @@ public class Frame2 {
 		mntmNewMenuItem_12.setBackground(Color.DARK_GRAY);
 		popupMenu.add(mntmNewMenuItem_12);
 		
+		}
+		
+		// --- VERGANGENHEIT ---
+		
+		if(Main.vergangen == true) {
+		
 		JMenuItem mntmNewMenuItem_13 = new JMenuItem("VERGANGENHEIT");
 		mntmNewMenuItem_13.setFont(new Font("Impact", Font.PLAIN, 15));
 		mntmNewMenuItem_13.setForeground(Color.WHITE);
@@ -244,6 +187,13 @@ public class Frame2 {
 		mntmNewMenuItem_15.setForeground(Color.WHITE);
 		mntmNewMenuItem_15.setBackground(Color.DARK_GRAY);
 		popupMenu.add(mntmNewMenuItem_15);
+		
+		JMenuItem mntmNewMenuItem_6 = new JMenuItem("- Kinderamut");
+		mntmNewMenuItem_6.setForeground(Color.WHITE);
+		mntmNewMenuItem_6.setBackground(Color.DARK_GRAY);
+		popupMenu.add(mntmNewMenuItem_6);
+		
+	}
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setForeground(Color.DARK_GRAY);
@@ -266,18 +216,6 @@ public class Frame2 {
 		JEditorPane editorPane = new JEditorPane();
 		editorPane.setBounds(338, 101, 420, 532);
 		frame.getContentPane().add(editorPane);
-		
-		JMenuItem mntmNewMenuItem_6 = new JMenuItem("- Kinderamut");
-		mntmNewMenuItem_6.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-			}
-
-		});
-		mntmNewMenuItem_6.setForeground(Color.WHITE);
-		mntmNewMenuItem_6.setBackground(Color.DARK_GRAY);
-		popupMenu.add(mntmNewMenuItem_6);
 		
 		btnX.addMouseListener(new MouseAdapter() {	
 			
@@ -365,8 +303,6 @@ public class Frame2 {
 				
 			}
 		});
-		
-		
 		
 	}
 	private static void addPopup(Component component, final JPopupMenu popup) {
