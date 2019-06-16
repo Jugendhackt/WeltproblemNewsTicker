@@ -1,1 +1,4 @@
 # WeltproblemNewsTicker
+Wir wollten das Durcheinander der vielen existierenden News bewältigen und filtern. Je nachdem für welche Ereignisse sich der jeweilige User interessiert. Die News werden hauptsächlich aus RSS Feeds von Onlinezeitungen genommen. Im
+momentanen Prototypen haben wir Spiegel Online genutzt. Nachdem man sich (in der fertigen App) durch verschiedene Artikel von verschiedenen Seiten informiert hat, kann man im integrierten Forum mit anderen diskutieren. Dabei können
+Ideen für Verbesserungsvorschläge etc. entstehen. Weiterhin haben wir Tipps integriert, um es einfacher zu machen sein Verhalten zu ändern, um die Welt bzw. die Erde zu verbessern. 
